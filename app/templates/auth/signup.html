@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - Pocket Pal{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h1 class="pixel-heading">Hatch a Pet</h1>
+    <p class="auth-sub">Create an account to get your own pet to raise.</p>
+
+    <form method="POST" class="form">
+      <label>Username
+        <input type="text" name="username" required minlength="3" maxlength="80" autocomplete="username">
+      </label>
+
+      <label>Password
+        <input type="password" name="password" required minlength="6" autocomplete="new-password">
+      </label>
+
+      <label>Confirm password
+        <input type="password" name="confirm" required minlength="6" autocomplete="new-password">
+      </label>
+
+      <hr class="divider">
+
+      <label>Name your pet
+        <input type="text" name="pet_name" maxlength="50" placeholder="Bud">
+      </label>
+
+      <label>Pick a species
+        <select name="species">
+          <option value="blob">Blob</option>
+          <option value="dino">Dino</option>
+          <option value="kitty">Kitty</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-block">Hatch &amp; Sign Up</button>
+    </form>
+
+    <p class="auth-switch">Already have a pet? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+  </div>
+</div>
+{% endblock %}

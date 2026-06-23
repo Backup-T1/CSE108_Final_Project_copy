@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Friends - Pocket Pal{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <h2 class="panel-title">Find Friends</h2>
+  <form method="GET" action="{{ url_for('social.search') }}" class="search-row">
+    <input type="text" name="q" placeholder="Search by username" value="{{ search_query or '' }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  {% if results is defined %}
+    {% if results %}
+      <ul class="user-list">
+        {% for user in results %}
+          <li class="user-row">
+            <span>{{ user.username }}</span>
+            <form method="POST" action="{{ url_for('social.send_request', user_id=user.id) }}">
+              <button type="submit" class="btn btn-small btn-primary">Add Friend</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-note">No users found for "{{ search_query }}".</p>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% if incoming %}
+<section class="panel">
+  <h2 class="panel-title">Pending Requests</h2>
+  <ul class="user-list">
+    {% for fr in incoming %}
+      <li class="user-row">
+        <span>{{ fr.requester.username }}</span>
+        <div class="row-actions">
+          <form method="POST" action="{{ url_for('social.respond', friendship_id=fr.id, action='accept') }}">
+            <button type="submit" class="btn btn-small btn-primary">Accept</button>
+          </form>
+          <form method="POST" action="{{ url_for('social.respond', friendship_id=fr.id, action='decline') }}">
+            <button type="submit" class="btn btn-small btn-ghost">Decline</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2 class="panel-title">Your Friends</h2>
+  {% if friends %}
+    <ul class="friend-grid">
+      {% for friend in friends %}
+        <li class="friend-card">
+          <div class="friend-name">{{ friend.username }}</div>
+          {% if friend.pet %}
+            <div class="friend-pet-row">
+              <span class="mini-mood" data-mood="{{ friend.pet.mood }}"></span>
+              <span>{{ friend.pet.name }} the {{ friend.pet.species }}</span>
+            </div>
+          {% endif %}
+          <a class="btn btn-small btn-primary" href="{{ url_for('social.visit', user_id=friend.id) }}">Visit</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-note">No friends yet. Search above to add some.</p>
+  {% endif %}
+</section>
+{% endblock %}

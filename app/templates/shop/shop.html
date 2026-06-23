@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Shop - Pocket Pal{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <h2 class="panel-title">Shop</h2>
+  <div class="shop-grid">
+    {% for item in items %}
+      <div class="shop-item">
+        <svg class="item-icon item-icon-lg"><use href="{{ url_for('static', filename='img/icons.svg') }}#icon-{{ item_icon_key(item.name) }}"></use></svg>
+        <div class="shop-item-name">{{ item.name }}</div>
+        <div class="shop-item-effects">
+          {% if item.hunger_effect %}<span class="chip chip-hunger">Hunger {{ '%+d'|format(item.hunger_effect|int) }}</span>{% endif %}
+          {% if item.happiness_effect %}<span class="chip chip-happiness">Happiness {{ '%+d'|format(item.happiness_effect|int) }}</span>{% endif %}
+          {% if item.energy_effect %}<span class="chip chip-energy">Energy {{ '%+d'|format(item.energy_effect|int) }}</span>{% endif %}
+        </div>
+        <form method="POST" action="{{ url_for('shop.buy', item_id=item.id) }}">
+          <button type="submit" class="btn btn-small btn-primary">Buy - {{ item.cost }} coins</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel">
+  <h2 class="panel-title">Send a Gift</h2>
+  {% if friends %}
+    <form method="POST" action="{{ url_for('shop.send_gift') }}" class="form gift-form">
+      <label>To
+        <select name="friend_id" required>
+          {% for friend in friends %}
+            <option value="{{ friend.id }}">{{ friend.username }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Item
+        <select name="item_id" required>
+          {% for item in items %}
+            <option value="{{ item.id }}">{{ item.name }} ({{ item.cost }} coins)</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Message (optional)
+        <input type="text" name="message" maxlength="200" placeholder="Hope your pet loves this!">
+      </label>
+      <button type="submit" class="btn btn-primary">Send Gift</button>
+    </form>
+  {% else %}
+    <p class="empty-note">Add some <a href="{{ url_for('social.friends_list') }}">friends</a> first to send gifts.</p>
+  {% endif %}
+</section>
+{% endblock %}

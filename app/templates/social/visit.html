@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Visiting {{ pet.name }} - Pocket Pal{% endblock %}
+{% block content %}
+
+<a class="back-link" href="{{ url_for('social.friends_list') }}">&larr; Back to friends</a>
+
+<div class="device-wrap">
+  <div class="device">
+    <div class="device-label">{{ host.username }}'s {{ pet.stage|upper }} · {{ pet.species|upper }}</div>
+
+    <div class="screen" data-mood="{{ pet.mood }}" data-species="{{ pet.species }}" data-reaction="{{ reaction }}">
+      <div class="pet-creature">
+        <div class="pet-eyes">
+          <span class="eye left"></span>
+          <span class="eye right"></span>
+        </div>
+        <div class="pet-mouth"></div>
+        <div class="feed-morsel"></div>
+      </div>
+      <div class="screen-scanlines"></div>
+    </div>
+
+    <div class="stat-bars">
+      <div class="stat-row">
+        <span class="stat-label">Hunger</span>
+        <div class="bar"><div class="bar-fill bar-hunger" style="width: {{ pet.hunger }}%"></div></div>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Happiness</span>
+        <div class="bar"><div class="bar-fill bar-happiness" style="width: {{ pet.happiness }}%"></div></div>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Energy</span>
+        <div class="bar"><div class="bar-fill bar-energy" style="width: {{ pet.energy }}%"></div></div>
+      </div>
+    </div>
+
+    <div class="device-buttons">
+      <form method="POST" action="{{ url_for('social.give_treat', user_id=host.id) }}">
+        <button type="submit" class="btn btn-chunky" {% if already_treated_today %}disabled{% endif %}>
+          {{ "Treat Given Today" if already_treated_today else "Give a Treat" }}
+        </button>
+      </form>
+      <a class="btn btn-chunky" href="{{ url_for('shop.shop_home') }}">Send a Gift</a>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/pet.js') }}"></script>
+{% endblock %}

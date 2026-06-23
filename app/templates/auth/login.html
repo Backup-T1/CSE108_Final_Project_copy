@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Log In - Pocket Pal{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h1 class="pixel-heading">Welcome Back</h1>
+    <p class="auth-sub">Your pet has missed you.</p>
+
+    <form method="POST" class="form">
+      <label>Username
+        <input type="text" name="username" required autocomplete="username">
+      </label>
+      <label>Password
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">Log In</button>
+    </form>
+
+    <p class="auth-switch">New here? <a href="{{ url_for('auth.signup') }}">Hatch a pet</a></p>
+  </div>
+</div>
+{% endblock %}

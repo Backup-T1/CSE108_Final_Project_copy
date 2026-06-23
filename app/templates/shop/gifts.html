@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Gifts - Pocket Pal{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <h2 class="panel-title">Unopened Gifts</h2>
+  {% if unopened %}
+    <ul class="gift-list">
+      {% for gift in unopened %}
+        <li class="gift-row gift-unopened">
+          <svg class="item-icon gift-emoji"><use href="{{ url_for('static', filename='img/icons.svg') }}#icon-{{ item_icon_key(gift.item.name) }}"></use></svg>
+          <div class="gift-info">
+            <div><strong>{{ gift.sender.username }}</strong> sent you {{ gift.item.name }}</div>
+            {% if gift.message %}<div class="gift-message">"{{ gift.message }}"</div>{% endif %}
+          </div>
+          <form method="POST" action="{{ url_for('shop.open_gift', gift_id=gift.id) }}">
+            <button type="submit" class="btn btn-small btn-primary">Open</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-note">No unopened gifts right now.</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2 class="panel-title">Received</h2>
+  {% if opened %}
+    <ul class="gift-list">
+      {% for gift in opened %}
+        <li class="gift-row">
+          <svg class="item-icon gift-emoji"><use href="{{ url_for('static', filename='img/icons.svg') }}#icon-{{ item_icon_key(gift.item.name) }}"></use></svg>
+          <div class="gift-info">{{ gift.item.name }} from {{ gift.sender.username }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-note">Nothing opened yet.</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2 class="panel-title">Sent</h2>
+  {% if sent %}
+    <ul class="gift-list">
+      {% for gift in sent %}
+        <li class="gift-row">
+          <svg class="item-icon gift-emoji"><use href="{{ url_for('static', filename='img/icons.svg') }}#icon-{{ item_icon_key(gift.item.name) }}"></use></svg>
+          <div class="gift-info">{{ gift.item.name }} to {{ gift.receiver.username }} {{ "(opened)" if gift.opened else "(unopened)" }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty-note">You haven't sent any gifts yet.</p>
+  {% endif %}
+</section>
+{% endblock %}
