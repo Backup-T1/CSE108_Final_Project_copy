@@ -76,15 +76,20 @@
     <section class="panel">
       <h2 class="panel-title">Coin Game</h2>
       <div id="minigame-panel">
-        {% if minigame_can_play %}
+        
           <p id="minigame-info" class="empty-note">Click the target before it slips away. <span id="minigame-plays-used">{{ minigame_plays_used }}</span> of {{ minigame_max_plays }} plays used today.</p>
           <div id="minigame-box" class="minigame-box">
             <button id="minigame-target" class="minigame-target" aria-label="target"></button>
           </div>
           <p id="minigame-result" class="minigame-result"></p>
-        {% else %}
-          <p id="minigame-info" class="empty-note">No plays left today ({{ minigame_max_plays }} of {{ minigame_max_plays }} used). Come back tomorrow for more coins.</p>
-        {% endif %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">Flappy Pet</h2>
+      <div id="flappy-contain">
+        <canvas id="flappy-canvas" width="380px" height="380px"></canvas>
+        <p id="flappy-result"></p>
       </div>
     </section>
   </div>
@@ -92,4 +97,5 @@
 
 <script src="{{ url_for('static', filename='js/pet.js') }}"></script>
 <script src="{{ url_for('static', filename='js/minigame.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flappy.js') }}"></script>
 {% endblock %}

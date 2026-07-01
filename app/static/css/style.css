@@ -419,6 +419,17 @@ a:hover { text-decoration: underline; }
 }
 .minigame-result { font-weight: 800; margin-top: 8px; min-height: 20px; }
 
+/* ---------- flappy implement --------- */
+#flappy-contain{
+  height: 400px;
+  width: 400px;
+  overflow: hidden;
+}
+#flappy-canvas{
+  background: rgb(167, 199, 231);
+  border-radius: 10px;
+  display: block;
+}
 /* ---------- Friends / users ---------- */
 .search-row { display: flex; gap: 8px; margin-bottom: 16px; }
 .search-row input { flex: 1; border-radius: 10px; border: 2px solid #E1D9F0; padding: 10px 12px; font-weight: 600; }

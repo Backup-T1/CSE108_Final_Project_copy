@@ -137,3 +137,21 @@ def minigame_play():
         "plays_used": plays_used,
         "max_plays": max_plays,
     })
+    
+@shop_bp.route("/flappy/play", methods = ["POST"])
+@login_required
+def flappy_play():
+        
+    data = request.get_json()
+    score = data.get("score", 0)
+    
+    payout = score
+    current_user.coins += payout
+    
+    db.session.commit()
+    
+    return jsonify({
+        "ok": True,
+        "payout": payout,
+        "coins": current_user.coins
+    })
