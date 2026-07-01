@@ -37,6 +37,14 @@ def signup():
         pet_name = request.form.get("pet_name", "").strip() or "Bud"
         species = request.form.get("species", "blob")
         pet = Pet(user_id=user.id, name=pet_name, species=species)
+        # Species default colors on hatch
+        if species == "dino":
+            pet.color = "#7FD694"
+        elif species == "kitty":
+            pet.color = "#ECE9F4"
+        elif species == "blob":
+            pet.color = "#F7B8D2"
+
         db.session.add(pet)
 
         db.session.commit()

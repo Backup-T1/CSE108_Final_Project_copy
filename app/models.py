@@ -44,6 +44,12 @@ class Pet(db.Model):
     name = db.Column(db.String(50), default="Bud")
     species = db.Column(db.String(30), default="blob")  # blob, dino, kitty - drives CSS art variant
 
+    # Added new customization fields
+    color = db.Column(db.String(20), default=None)
+    accessory = db.Column(db.String(50), nullable=True)
+    background = db.Column(db.String(50), default="default")
+
+
     hunger = db.Column(db.Float, default=100.0)
     happiness = db.Column(db.Float, default=100.0)
     energy = db.Column(db.Float, default=100.0)
