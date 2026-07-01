@@ -157,12 +157,13 @@ a:hover { text-decoration: underline; }
 .btn-chunky:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
 
 /* ---------- Device / pet screen ---------- */
-.device-wrap { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+.device-wrap { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; overflow: hidden; }
 .device {
   background: var(--device);
   border-radius: 32px;
   padding: 22px;
-  width: 280px;
+  width: 310px;
+  min-width: 310px;
   flex-shrink: 0;
   color: white;
 }
