@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Customize Pet{% endblock %}
+{% block content %}
+
+<h2 class="pixel-heading">Customize Your Pet</h2>
+
+<form method="POST" class="form">
+
+  <label>
+    Color
+    <select name="color">
+
+    <!-- Default option with species color name -->
+    <option value=""
+        {% if pet.color is none %}
+        selected
+        {% endif %}
+    >
+        Default - {{ default_color_name }}
+    </option>
+
+    <!-- Pink (hidden for blob) -->
+    {% if pet.species != "blob" %}
+        <option value="#F4C7D9"
+        {% if pet.color == "#F4C7D9" %}
+            selected
+        {% endif %}
+        >Pink</option>
+    {% endif %}
+
+    <!-- Purple -->
+    <option value="#DCC7F8"
+        {% if pet.color == "#DCC7F8" %}
+        selected
+        {% endif %}
+    >Purple</option>
+
+    <!-- Blue -->
+    <option value="#C7E6FA"
+        {% if pet.color == "#C7E6FA" %}
+        selected
+        {% endif %}
+    >Blue</option>
+
+    <!-- Green (hidden for dino) -->
+    {% if pet.species != "dino" %}
+        <option value="#7FD694"
+        {% if pet.color == "#7FD694" %}
+            selected
+        {% endif %}
+        >Green</option>
+    {% endif %}
+
+    </select>
+
+    </select>
+
+  </label>
+
+    <label>
+    Accessory
+    <select name="accessory">
+        <option value=""
+        {% if pet.accessory == "" or pet.accessory is none %}
+            selected
+        {% endif %}
+        >None</option>
+
+        <option value="bow"
+        {% if pet.accessory == "bow" %}
+            selected
+        {% endif %}
+        >Bow</option>
+
+        <option value="hat"
+        {% if pet.accessory == "hat" %}
+            selected
+        {% endif %}
+        >Hat</option>
+
+        <option value="glasses"
+        {% if pet.accessory == "glasses" %}
+            selected
+        {% endif %}
+        >Glasses</option>
+    </select>
+    </label>
+
+
+    <label>
+    Background
+    <select name="background">
+        <option value="default"
+        {% if pet.background == "default" %}
+            selected
+        {% endif %}
+        >Default</option>
+
+        <option value="forest"
+        {% if pet.background == "forest" %}
+            selected
+        {% endif %}
+        >Forest</option>
+
+        <option value="beach"
+        {% if pet.background == "beach" %}
+            selected
+        {% endif %}
+        >Beach</option>
+
+        <option value="space"
+        {% if pet.background == "space" %}
+            selected
+        {% endif %}
+        >Space</option>
+    </select>
+    </label>
+
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+{% endblock %}

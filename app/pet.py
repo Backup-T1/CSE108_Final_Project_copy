@@ -27,9 +27,23 @@ def dashboard():
     if reaction not in ALLOWED_REACTIONS:
         reaction = ""
 
+    # Species default colors (used when pet.color is None)
+    if pet.species == "dino":
+        default_color = "#7FD694"
+        default_color_name = "Green"
+    elif pet.species == "kitty":
+        default_color = "#ECE9F4"
+        default_color_name = "White"
+    elif pet.species == "blob":
+        default_color = "#F7B8D2"
+        default_color_name = "Pink"
+
+
     return render_template(
         "pet/dashboard.html",
         pet=pet,
+        default_color=default_color,
+        default_color_name=default_color_name,
         inventory=inventory,
         reaction=reaction,
         minigame_plays_used=minigame_plays_used_today(current_user),
@@ -37,6 +51,44 @@ def dashboard():
         minigame_max_plays=current_app.config["MINIGAME_PLAYS_PER_DAY"],
     )
 
+@pet_bp.route("/customize", methods=["GET", "POST"])
+@login_required
+def customize():
+    pet = current_user.pet
+
+    # Species default colors (used when pet.color is None)
+    if pet.species == "dino":
+        default_color = "#7FD694"
+        default_color_name = "Green"
+    elif pet.species == "kitty":
+        default_color = "#ECE9F4"
+        default_color_name = "White"
+    elif pet.species == "blob":
+        default_color = "#F7B8D2"
+        default_color_name = "Pink"
+
+    if request.method == "POST":
+        chosen_color = request.form.get("color")
+
+        # Default → species color
+        if chosen_color == "":
+            pet.color = None
+        else:
+            pet.color = chosen_color
+
+        pet.accessory = request.form.get("accessory", pet.accessory)
+        pet.background = request.form.get("background", pet.background)
+
+        db.session.commit()
+        flash("Your pet's look has been updated!", "success")
+        return redirect(url_for("pet.dashboard"))
+
+    return render_template(
+        "pet/customize.html",
+        pet=pet,
+        default_color=default_color,
+        default_color_name=default_color_name
+    )
 
 @pet_bp.route("/care/<action>", methods=["POST"])
 @login_required

@@ -197,12 +197,154 @@ a:hover { text-decoration: underline; }
   animation: idle-bob 2.6s ease-in-out infinite;
 }
 
+/* -- Accessory mount (keeps accessories off species pseudo-elements)-- */
+.accessory-mount {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+/* -- Bow -- */
+.accessory-mount.bow::before {
+  content: "";
+  position: absolute;
+  top: 67px;        /* moved up under mouth */
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);   /* rotate bow horizontally */
+  width: 26px;
+  height: 25px;
+  background: #ff7ebf;
+  clip-path: polygon(0% 0%, 42% 50%, 0% 100%, 100% 100%, 58% 50%, 100% 0%);
+}
+
+.accessory-mount.bow::after {
+  content: "";
+  position: absolute;
+  top: 74px;        /* moved up */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #e0559a;
+}
+
+
+/* -- Hat -- */
+.accessory-mount.hat::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 82px;
+  width: 12px;
+  height: 14px;
+  background: #2b2b2b;
+  border-radius: 2px 2px 0 0;
+  transform: rotate(45deg);
+  transform-origin: 50% 100%;
+}
+.accessory-mount.hat::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 77px;
+  width: 22px;
+  height: 6px;
+  background: #2b2b2b;
+  border-radius: 50%;
+  transform: rotate(45deg);
+  transform-origin: 50% 50%;
+}
+
+/* -- Glasses -- */
+/* Left circle */
+.accessory-mount.glasses {
+  position: absolute;
+  top: 35px;
+  left: 30px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 3px solid #118b83;
+  background: transparent;
+}
+/* Bar */
+.accessory-mount.glasses::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 18px;
+  width: 8px;
+  height: 4px;
+  background: #118b83;
+}
+/* Right circle */
+.accessory-mount.glasses::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 24px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid #118b83;
+  background: transparent;
+}
+
+
+.screen.forest {
+  background: linear-gradient(#b7e4c7, #74c69d);
+}
+
+.screen.forest::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, #2e8b57 0%, transparent 60%),
+    radial-gradient(circle at 80% 75%, #3a5f0b 0%, transparent 60%),
+    radial-gradient(circle at 50% 90%, #4f772d 0%, transparent 70%);
+  opacity: 0.25;
+}
+
+.screen.beach {
+  background: linear-gradient(#ffe8b5, #ffd29c, #87ceeb);
+}
+
+.screen.beach::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 85%, #f4c27a 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, #fff 0%, transparent 70%);
+  opacity: 0.25;
+}
+
+.screen.space {
+  background: radial-gradient(circle at center, #1a1a2e, #000);
+}
+
+.screen.space::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, #ffffffaa 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, #ffffff88 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, #ffffff55 0%, transparent 50%);
+  opacity: 0.3;
+}
+
+
+
 /* Species controls both COLOR and SHAPE now. Mood still shows through the
    face (see the eye/mouth rules below) so you can tell how the pet's doing
    without every species turning the same color. */
-.screen[data-species="dino"] .pet-creature { --creature-color: #7FD694; border-radius: 50% 50% 35% 35%; }
-.screen[data-species="kitty"] .pet-creature { --creature-color: #ECE9F4; border-radius: 55% 55% 45% 45%; }
-.screen[data-species="blob"] .pet-creature { --creature-color: #F7B8D2; }
+.screen[data-species="dino"] .pet-creature { border-radius: 50% 50% 35% 35%; }
+.screen[data-species="kitty"] .pet-creature { border-radius: 55% 55% 45% 45%; }
+.screen[data-species="blob"] .pet-creature { }
 
 /* Kitty: two ears + a small nose, filled solid to match blob/dino's style */
 .screen[data-species="kitty"] .pet-creature::before,
@@ -482,3 +624,5 @@ a:hover { text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) {
   .btn, .bar-fill { transition: none; }
 }
+
+

@@ -6,22 +6,36 @@
   <div class="device">
     <div class="device-label">{{ pet.stage|upper }} · {{ pet.species|upper }}</div>
 
-    <div class="screen" data-mood="{{ pet.mood }}" data-species="{{ pet.species }}" data-reaction="{{ reaction }}">
+    <div class="screen {{ pet.background }}"
+         data-mood="{{ pet.mood }}"
+         data-species="{{ pet.species }}"
+         data-reaction="{{ reaction }}"
+         style="--creature-color: {{ pet.color or default_color }};">
+
       <div class="pet-creature">
+        <span class="accessory-mount {{ pet.accessory }}"></span>
+
         <div class="pet-eyes">
           <span class="eye left"></span>
           <span class="eye right"></span>
         </div>
+
         <div class="pet-mouth"></div>
         <div class="feed-morsel"></div>
       </div>
+
       <div class="screen-scanlines"></div>
     </div>
-
+    </div>
+    
     <form method="POST" action="{{ url_for('pet.rename') }}" class="rename-row">
       <input type="text" name="name" value="{{ pet.name }}" maxlength="50">
       <button type="submit" class="btn btn-rename btn-small">Rename</button>
     </form>
+
+    <a href="{{ url_for('pet.customize') }}" class="btn btn-small btn-primary" style="margin-bottom: 12px;">
+      Customize Pet
+    </a>
 
     <div class="stat-bars">
       <div class="stat-row">
