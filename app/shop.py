@@ -143,7 +143,7 @@ def minigame_play():
 def flappy_play():
         
     data = request.get_json()
-    score = data.get("score", 0)
+    score = max(0, min(int(data.get("score", 0)), 50))
     
     payout = score
     current_user.coins += payout
